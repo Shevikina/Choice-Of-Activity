@@ -4,6 +4,18 @@ open class Film(override var name: String = "",
                 var time:Int=0):Choisable {
     override var genre:String=""
     var actors= Array(5){""}
+    fun intActors(){
+        println("Доступно добавление 5 актеров.\nВы хотите добавить актеров?")
+        if(readLine()==yes){
+            println("Введите имена:")
+            for(x in 0..4) {
+                var scanner= readLine()
+                if(scanner is String)
+                    actors[x]= scanner
+            }
+        }
+        else println("Что-то пошло не так.")
+    }
     fun review() {
         println("Вы смотрите $name\nАвтора $author\n" +
                 "Данный фильм длится $time минут и имеет возрастной рейтинг $ageRating+.\nВ главных ролях:")

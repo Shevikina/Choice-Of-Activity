@@ -1,7 +1,7 @@
 const val yes="Да"
 
 fun main(args:Array<String>) {
-    var film:Array<Film> = Array(50){Film()}
+    var film:Array<Film> = Array(5){Film()}
 println("У вас явно есть свободная минутка.\nХотите почитатать или посмотреть что-нибудь?")
     if(readLine()==yes){
         var error1=false
@@ -14,7 +14,7 @@ println("У вас явно есть свободная минутка.\nХот�
                         "Книга, Фильм, Сериал")
                 when(readLine()){
                     "Книга"->createBook()
-                    "Фильм"->createFilm(film)
+                    "Фильм"->film=createFilm(film)
                     "Сериал"->createSerial()
                     else -> {
                         println("Простите. Мы не понимаем что вы выбрали.\nХотите выйти?")
@@ -31,7 +31,7 @@ println("У вас явно есть свободная минутка.\nХот�
             println("Выбирайте, чем хотите себя занять:\nКнига, Фильм, Сериал")
             when(readLine()){
                 "Книга"->watchBook()
-                "Фильм"->watchFilm(melodrama,detective)
+                "Фильм"->watchFilm(film)
                 "Сериал"->watchSerial()
                 else -> {
                     println("Простите. Мы не понимаем что вы выбрали.\nХотите выйти?")
@@ -48,7 +48,7 @@ println("У вас явно есть свободная минутка.\nХот�
 fun createBook(){
 
 }
-fun createFilm(film:Array<Film>){
+fun createFilm(film:Array<Film>):Array<Film>{
     var error=false
     print("Фильм!")
     while(!error){
@@ -79,15 +79,16 @@ fun createFilm(film:Array<Film>){
                 var num= readLine()!!.toInt()
                 if(num>=0){
                     for(index in 0 until num) {
+                        film[index].genre="Мелодрамма"
                         println("Как называется фильм?")
-                        melodrama[index].name= readLine() as String
+                        film[index].name= readLine() as String
                         println("Кто режжисер?")
-                        melodrama[index].author= readLine() as String
+                        film[index].author= readLine() as String
                         println("Сколько длится в минутах?")
-                        melodrama[index].time= readLine()!!.toInt()
+                        film[index].time= readLine()!!.toInt()
                         println("Какой возрастной рейтинг у фильма?")
-                        melodrama[index].ageRating= readLine()!!.toInt()
-                        melodrama[index].intActors()
+                        film[index].ageRating= readLine()!!.toInt()
+                        film[index].intActors()
                     }
                 }
             }
@@ -98,6 +99,7 @@ fun createFilm(film:Array<Film>){
             }
         }
     }
+    return film
 }
 fun createSerial(){
 
@@ -105,7 +107,7 @@ fun createSerial(){
 fun watchBook(){
     println("Инициализация книги")
 }
-fun watchFilm(melodrama:Array<MelodramaFilm>,detective:Array<DetectiveFilm>){
+fun watchFilm(film:Array<Film>){
     var error=false
     println("Фильм! Ох, к сожалению, у нас доступно только 2 вида жанров.\n" +
             "Какой бы хотели посмотреть вы?")
@@ -113,25 +115,25 @@ fun watchFilm(melodrama:Array<MelodramaFilm>,detective:Array<DetectiveFilm>){
         println("Детектив или Меллодрамму?")
         when(readLine()) {
             "Детектив"->{
-                println("Вы выбрали жанр ${detective[0].genre}.\nВам доступны следующие фильмы:")
-                for(index in detective.indices){
-                    println("${index+1}) ${detective[index]}")
+                println("Вы выбрали жанр ${film[0].genre}.\nВам доступны следующие фильмы:")
+                for(index in film.indices){
+                    println("${index+1}) ${film[index]}")
                 }
                 println("Введите номер фильма, который хотите посмотреть")
                 var num= readLine()!!.toInt()-1
-                if(num>=0&&num<detective.size){
-                    detective[num].review()
+                if(num>=0&&num<film.size){
+                    film[num].review()
                 }
             }
             "Мелодрамму"->{
-                println("Вы выбрали жанр ${melodrama[0].genre}.\nВам доступны следующие фильмы:")
-                for(index in melodrama.indices){
-                    println("${index+1}) ${melodrama[index]}")
+                println("Вы выбрали жанр ${film[0].genre}.\nВам доступны следующие фильмы:")
+                for(index in film.indices){
+                    println("${index+1}) ${film[index]}")
                 }
                 println("Введите номер фильма, который хотите посмотреть")
                 var num= readLine()!!.toInt()-1
-                if(num>=0&&num<melodrama.size)
-                    melodrama[num].review()
+                if(num>=0&&num<film.size)
+                    film[num].review()
             }
             else->{
                 println("Хотите выбрать что-то другое?")
